@@ -72,6 +72,8 @@ while True:
         qual = leiaint()
         quant = leiaint("Quantidade de Cartelas: ")
 
+        print("-=-=-=- NOME DO EVENTO -=-=-=-")
+        nome_evento = str(input("Nome: "))
         # Sorteando os números para a cartela
         while True:
             colbingo(b, 5, 1, 15, cartela)
@@ -118,9 +120,9 @@ while True:
             # Gerador com molde Personalizado:
             if qual == 2:
                 # Colocar bingo principal:
-                coord_paint = (173, 530)
+                coord_paint = (173, 525)
                 imagem = Image.open(diretorio_molde2)
-                font2 = ImageFont.truetype(caminho_fonte, 92)
+                font2 = ImageFont.truetype(caminho_fonte, 93)
                 desenho = ImageDraw.Draw(imagem)
                 desenho.text(coord_paint, tabela, font=font2, fill=rgb_preto)
 
@@ -131,21 +133,28 @@ while True:
                 desenho.text(coord_paint, tabela, font=font3, fill=rgb_preto)
 
                 # Colocar o número da rifa
-                coord_paint = (700, 365)
+                coord_paint = (695, 365)
                 font = ImageFont.truetype(caminho_fonte, 37)
                 desenho = ImageDraw.Draw(imagem)
                 k += 1
                 k = str(k)
                 if len(k) == 1:
+                    k = f'000{k}'
+                elif len(k) == 2:
                     k = f'00{k}'
-                if len(k) == 2:
+                elif len(k) == 3:
                     k = f'0{k}'
                 desenho.text(coord_paint, f'N° {k}', font=font, fill=rgb_branco)
                 k = int(k)
                 k -= 1
 
             # Salvando a imagem e mostrando
-            imagem.save(f'Cartela_{k + 1}.png')
+            diretorio_resultados = os.path.join(diretorio_principal, f"{nome_evento}")
+            try:
+                os.mkdir(diretorio_resultados)
+                imagem.save(fr'{diretorio_resultados}\{nome_evento}_N{k+1}.png')
+            except OSError:
+                imagem.save(fr'{nome_evento}_N{k+1}.png')
             imagem.show()
 
         # Gerando um txt para armazenar os dados (Nota: Não é a melhor forma para se armazenar dados, mas foi a forma que eu pensei na época que estava criando):
