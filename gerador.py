@@ -74,6 +74,9 @@ while True:
 
         print("-=-=-=- NOME DO EVENTO -=-=-=-")
         nome_evento = str(input("Nome: "))
+        diretorio_resultados = os.path.join(diretorio_principal, f"Cartelas-{nome_evento}")
+        os.mkdir(diretorio_resultados)
+
         # Sorteando os números para a cartela
         while True:
             colbingo(b, 5, 1, 15, cartela)
@@ -149,13 +152,8 @@ while True:
                 k -= 1
 
             # Salvando a imagem e mostrando
-            diretorio_resultados = os.path.join(diretorio_principal, f"{nome_evento}")
-            try:
-                os.mkdir(diretorio_resultados)
-                imagem.save(fr'{diretorio_resultados}\{nome_evento}_N{k+1}.png')
-            except OSError:
-                imagem.save(fr'{nome_evento}_N{k+1}.png')
-            imagem.show()
+            imagem.save(fr'{diretorio_resultados}\{nome_evento}_N{k+1}.png')
+            #imagem.show()
 
         # Gerando um txt para armazenar os dados (Nota: Não é a melhor forma para se armazenar dados, mas foi a forma que eu pensei na época que estava criando):
         # O txt vai armazenar uma string, com os números de todas as cartela
