@@ -4,10 +4,10 @@ from time import sleep
 import os
 
 diretorio_principal = os.path.dirname(__file__)
-diretorio_molde1 = os.path.join(diretorio_principal, "Moldes", "molde1.png")
-diretorio_molde2 = os.path.join(diretorio_principal, "Moldes", "molde2.png")
+diretorio_molde1 = os.path.join(diretorio_principal, "Moldes", "molde2.0.png")
+diretorio_molde2 = os.path.join(diretorio_principal, "Moldes", "molde2.1.png")
 caminho_fonte = '/home/vinicius/Downloads/bebas_neue/BebasNeue-Regular.otf'
-rgb_preto, rgb_branco = (0, 0, 0), (255, 255, 255)
+rgb_preto, rgb_branco = (50, 50, 50), (255, 255, 255)
 pro = 'Gerador de Bingo'
 arq = 'dadosrifa.txt'
 contador = imagem = 0
@@ -112,32 +112,33 @@ while True:
                       f'{geral[k][0][4]:<3} {geral[k][1][4]:<3} {geral[k][2][3]:<3} {geral[k][3][4]:<3} {geral[k][4][4]:<3} \n')
 
 
-            # Gerador com molde em Branco:
-            if qual == 1:
-                coord_paint = (5, 5)
-                imagem = Image.open(diretorio_molde1)
-                font1 = ImageFont.truetype(caminho_fonte, 68)
-                desenho = ImageDraw.Draw(imagem)
-                desenho.text(coord_paint, tabela, font=font1, fill=rgb_preto)
+            if qual == 1: imagem = Image.open(diretorio_molde1)
+            elif qual == 2: imagem = Image.open(diretorio_molde2)
+
+            font1 = ImageFont.truetype(caminho_fonte, 167)
+            desenho = ImageDraw.Draw(imagem)
+            
+            coord_paint = (735, 575)
+            desenho.text(coord_paint, tabela, font=font1, fill=rgb_preto)
+
+            coord_paint = (1815, 575)
+            desenho.text(coord_paint, tabela, font=font1, fill=rgb_preto)
+
+            coord_paint = (735, 1513)
+            desenho.text(coord_paint, tabela, font=font1, fill=rgb_preto)
+
+            coord_paint = (1815, 1513)
+            desenho.text(coord_paint, tabela, font=font1, fill=rgb_preto)
+
+            coord_paint = (2830, 1945)
+            font1 = ImageFont.truetype(caminho_fonte, 96)
+            desenho.text(coord_paint, tabela, font=font1, fill=rgb_preto)
 
             # Gerador com molde Personalizado:
             if qual == 2:
-                # Colocar bingo principal:
-                coord_paint = (173, 525)
-                imagem = Image.open(diretorio_molde2)
-                font2 = ImageFont.truetype(caminho_fonte, 93)
-                desenho = ImageDraw.Draw(imagem)
-                desenho.text(coord_paint, tabela, font=font2, fill=rgb_preto)
-
-                # Colocar cópia menor para conferência:
-                coord_paint = (664, 996)
-                font3 = ImageFont.truetype(caminho_fonte, 27)
-                desenho = ImageDraw.Draw(imagem)
-                desenho.text(coord_paint, tabela, font=font3, fill=rgb_preto)
-
                 # Colocar o número da rifa
-                coord_paint = (695, 365)
-                font = ImageFont.truetype(caminho_fonte, 37)
+                coord_paint = (2935, 685)
+                font = ImageFont.truetype(caminho_fonte, 110)
                 desenho = ImageDraw.Draw(imagem)
                 k += 1
                 k = str(k)
@@ -147,13 +148,13 @@ while True:
                     k = f'00{k}'
                 elif len(k) == 3:
                     k = f'0{k}'
-                desenho.text(coord_paint, f'N° {k}', font=font, fill=rgb_branco)
+                desenho.text(coord_paint, f'N° {k}', font=font, fill=rgb_preto)
                 k = int(k)
                 k -= 1
 
             # Salvando a imagem e mostrando
             imagem.save(fr'{diretorio_resultados}\{nome_evento}_N{k+1}.png')
-            #imagem.show()
+            # imagem.show()
 
         # Gerando um txt para armazenar os dados (Nota: Não é a melhor forma para se armazenar dados, mas foi a forma que eu pensei na época que estava criando):
         # O txt vai armazenar uma string, com os números de todas as cartela
